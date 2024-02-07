@@ -22,16 +22,16 @@ g_savedata.userAddonConfig = {
     despawnFlares = property.checkbox("Despawn Settings - Despawn flares", true)
 }
 
-local despawnExceptions = { -- index = object type
-    [1] = g_savedata.userAddonConfig.despawnCharacters,
+despawnExceptions = { -- index = object type
+    [1] = not g_savedata.userAddonConfig.despawnCharacters,
 
-    [3] = g_savedata.userAddonConfig.despawnLootCrates,
-    [24] = g_savedata.userAddonConfig.despawnLootCrates,
+    [3] = not g_savedata.userAddonConfig.despawnLootCrates,
+    [24] = not g_savedata.userAddonConfig.despawnLootCrates,
 
-    [57] = g_savedata.userAddonConfig.despawnFlares,
-    [62] = g_savedata.userAddonConfig.despawnFlares,
-    [63] = g_savedata.userAddonConfig.despawnFlares,
-    [68] = g_savedata.userAddonConfig.despawnFlares
+    [57] = not g_savedata.userAddonConfig.despawnFlares,
+    [62] = not g_savedata.userAddonConfig.despawnFlares,
+    [63] = not g_savedata.userAddonConfig.despawnFlares,
+    [68] = not g_savedata.userAddonConfig.despawnFlares
 }
 
 -------------------------------
@@ -56,45 +56,45 @@ end
 -- // Main
 -------------------------------
 ---------- // Main
--- // Setup
--- Remove everything pending disposal
--- AuroraFramework.ready:connect(function()
---     disposablesLibrary.dispose()
--- end)
-
 -- // Addon
 -- Despawn all objects periodically
 local temporaryObjectSpawnPos = matrix.translation(0, 0, 0)
 local temporaryObjectObjectType = 2
 
-AuroraFramework.services.timerService.loop.create(0, function()
-    -- this way of tracking objects is quite bruteforced, but it works, and its pretty much the only way to reliably get spawned objects
+AuroraFramework.callbacks.onTick.main:connect(function()
+    -- spawn a new object
     local temporaryObject = server.spawnObject(temporaryObjectSpawnPos, temporaryObjectObjectType)
 
-    -- spawn a new object
-    local temporaryObject2 = server.spawnObject(temporaryObjectSpawnPos, temporaryObjectObjectType)
+    if not old then
+        old = temporaryObject
+    end
 
     -- an object (or multiple objects) was spawned, and not by us. track them
-    for object_id = temporaryObject, temporaryObject2 do
+    for object_id = old, temporaryObject do
+        -- mainLogger:setSuppressed(object_id == temporaryObject or object_id == old)
+        -- mainLogger:send("%s | %s/%s", object_id, old, temporaryObject)
+
         -- get the object's data. this is also technically a check to see whether or not the object exists
         local objectData = server.getObjectData(object_id)
 
         if not objectData then
+            -- mainLogger:send("no object data")
             goto continue
         end
 
         -- check if we are allowed to despawn this object
         if despawnExceptions[objectData.object_type] then
+            -- mainLogger:send("in exceptions")
             goto continue
         end
 
         -- despawn it
         server.despawnObject(object_id, true)
-
-        if object_id ~= temporaryObject and object_id ~= temporaryObject2 then
-            mainLogger:send("despawned %s", object_id)
-        end
+        -- mainLogger:send("despawned")
 
         ::continue::
     end
+
+    -- update old
+    old = temporaryObject
 end)
