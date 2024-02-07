@@ -36,6 +36,10 @@ AuroraFramework.services.playerService.events.onJoin:connect(function(player)
 
         DLCsBulletList = helpersLibrary.string.formatTableToBulletList(DLCsFormatted)
 
+        if #DLCsFormatted <= 0 then
+            DLCsBulletList = "No DLCs required."
+        end
+
         -- Send credit message
         helpersLibrary.chat.send(
             table.concat({
@@ -45,7 +49,7 @@ AuroraFramework.services.playerService.events.onJoin:connect(function(player)
                 ("Required DLCs:\n%s"):format(DLCsBulletList),
                 missingDLCsCount > 0 and ("[!!] If you are the host, please create a new save with the required DLCs enabled. Missing %s DLC(s).\n---"):format(missingDLCsCount) or "---",
                 addonConfiguration.credit.discordServerInvite,
-                ("Created by %s (Discord)."):format(addonConfiguration.credit.discordUsername)
+                ("Created by @%s (Discord)."):format(addonConfiguration.credit.discordUsername)
             }, "\n"),
 
             player
