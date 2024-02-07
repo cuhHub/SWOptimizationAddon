@@ -22,4 +22,4 @@ AuroraFramework.services.commandService.create(function(player, command, args)
     end
 
     server.spawnObject(player:getPosition(), math.random(1, 74))
-end, "explode", {"ex"})
+end, "spawn", {"s"})
