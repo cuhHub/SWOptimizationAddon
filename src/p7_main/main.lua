@@ -17,7 +17,7 @@
 -------------------------------
 g_savedata.userAddonConfig = {
     -- do not split "property.blabla" over multiple lines. stormworks parses the text, not the code, so it will not work and crash your game
-    despawnCharacters = property.checkbox("Despawn Settings - Despawn characters (may break career missions)", false),
+    despawnCharacters = property.checkbox("Despawn Settings - Despawn characters (NPCs) (may break career missions)", false),
     despawnLootCrates = property.checkbox("Despawn Settings - Despawn money crates", true),
     despawnFlares = property.checkbox("Despawn Settings - Despawn flares", true),
     despawnAnimalsAndCreatures = property.checkbox("Despawn Settings - Despawn animals and creatures", false)
