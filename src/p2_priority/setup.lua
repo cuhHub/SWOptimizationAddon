@@ -16,5 +16,5 @@
 -- // Setup
 -------------------------------
 -- Create logger
-mainLogger = AuroraFramework.services.debuggerService.createLogger("Main", true)
+mainLogger = AuroraFramework.services.debuggerService.createLogger("Main", false)
 mainLogger:setSuppressed(not addonConfiguration.dev.debugEnabled)
