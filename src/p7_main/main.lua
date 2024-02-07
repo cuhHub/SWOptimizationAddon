@@ -19,7 +19,8 @@ g_savedata.userAddonConfig = {
     -- do not split "property.blabla" over multiple lines. stormworks parses the text, not the code, so it will not work and crash your game
     despawnCharacters = property.checkbox("Despawn Settings - Despawn characters (may break career missions)", false),
     despawnLootCrates = property.checkbox("Despawn Settings - Despawn money crates", true),
-    despawnFlares = property.checkbox("Despawn Settings - Despawn flares", true)
+    despawnFlares = property.checkbox("Despawn Settings - Despawn flares", true),
+    despawnAnimalsAndCreatures = property.checkbox("Despawn Settings - Despawn animals and creatures", false)
 }
 
 despawnExceptions = { -- index = object type
@@ -31,7 +32,10 @@ despawnExceptions = { -- index = object type
     [57] = not g_savedata.userAddonConfig.despawnFlares,
     [62] = not g_savedata.userAddonConfig.despawnFlares,
     [63] = not g_savedata.userAddonConfig.despawnFlares,
-    [68] = not g_savedata.userAddonConfig.despawnFlares
+    [68] = not g_savedata.userAddonConfig.despawnFlares,
+
+    [59] = not g_savedata.userAddonConfig.despawnAnimalsAndCreatures,
+    [71] = not g_savedata.userAddonConfig.despawnAnimalsAndCreatures
 }
 
 -------------------------------
@@ -71,26 +75,20 @@ AuroraFramework.callbacks.onTick.main:connect(function()
 
     -- an object (or multiple objects) was spawned, and not by us. track them
     for object_id = old, temporaryObject do
-        -- mainLogger:setSuppressed(object_id == temporaryObject or object_id == old)
-        -- mainLogger:send("%s | %s/%s", object_id, old, temporaryObject)
-
         -- get the object's data. this is also technically a check to see whether or not the object exists
         local objectData = server.getObjectData(object_id)
 
         if not objectData then
-            -- mainLogger:send("no object data")
             goto continue
         end
 
         -- check if we are allowed to despawn this object
         if despawnExceptions[objectData.object_type] then
-            -- mainLogger:send("in exceptions")
             goto continue
         end
 
         -- despawn it
         server.despawnObject(object_id, true)
-        -- mainLogger:send("despawned")
 
         ::continue::
     end
