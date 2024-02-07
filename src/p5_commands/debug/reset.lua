@@ -7,7 +7,7 @@
 
     CREDIT:
         Author: @cuh6_ (Discord)
-        GitHub Repository: https://github.com/Cuh4/SWOptimizationAddon
+        GitHub Repository: https://github.com/cuhHub/SWOptimizationAddon
  
     ----------------------------
 ]]

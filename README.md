@@ -25,7 +25,7 @@ Feel free to `git clone`, or even contribute.
 4) Load into the save and go wild.
 
 ### 🤓 | Advanced
-1) Run `git clone "https://github.com/Cuh4/SWOptimizationAddon.git"`
+1) Run `git clone "https://github.com/cuhHub/SWOptimizationAddon.git"`
 2) Optionally, change the addon name in `playlist.xml` to whatever you desire.
 3) Run `py combiner.py` to merge all of the code into a `script.lua` file. Feel free to stop it with `CTRL + C` once it has been created.
 4) Run `sync.bat`. This will effectively clone the addon into `%appdata%/Stormworks/data/missions`, allowing you to use this addon in-game regardless of what directory the addon is in.
