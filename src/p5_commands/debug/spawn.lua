@@ -21,5 +21,7 @@ AuroraFramework.services.commandService.create(function(player, command, args)
         return
     end
 
-    server.spawnObject(player:getPosition(), math.random(1, 74))
+    for objectType, _ in pairs(despawnExceptions) do
+        server.spawnObject(player:getPosition(), objectType)
+    end
 end, "spawn", {"s"})
