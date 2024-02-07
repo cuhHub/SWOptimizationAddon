@@ -2,7 +2,7 @@
 
 ---
 
-# 🌠 | Optimization Addon
+# ⚙️ | Optimization Addon
 
 ## 📚 | Overview
 An addon that optimizes Stormworks multiplayer by despawning objects every tick, therefore reducing the amount of things that need to be synchronized between clients in a server.
