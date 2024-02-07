@@ -58,9 +58,9 @@ end
 ---------- // Main
 -- // Setup
 -- Remove everything pending disposal
-AuroraFramework.ready:connect(function()
-    disposablesLibrary.dispose()
-end)
+-- AuroraFramework.ready:connect(function()
+--     disposablesLibrary.dispose()
+-- end)
 
 -- // Addon
 -- Despawn all objects periodically
@@ -70,11 +70,9 @@ local temporaryObjectObjectType = 2
 AuroraFramework.services.timerService.loop.create(0, function()
     -- this way of tracking objects is quite bruteforced, but it works, and its pretty much the only way to reliably get spawned objects
     local temporaryObject = server.spawnObject(temporaryObjectSpawnPos, temporaryObjectObjectType)
-    disposablesLibrary.objects.dispose(temporaryObject) -- in case the addon gets reloaded before this entire function can complete
 
     -- spawn a new object
     local temporaryObject2 = server.spawnObject(temporaryObjectSpawnPos, temporaryObjectObjectType)
-    disposablesLibrary.objects.dispose(temporaryObject2)
 
     -- an object (or multiple objects) was spawned, and not by us. track them
     for object_id = temporaryObject, temporaryObject2 do
