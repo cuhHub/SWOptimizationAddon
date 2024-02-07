@@ -48,6 +48,6 @@ addonConfiguration = {
     },
 
     dev = {
-        debugEnabled = false
+        debugEnabled = true
     }
 }
