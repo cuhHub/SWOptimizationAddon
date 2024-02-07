@@ -9,6 +9,8 @@ An addon that optimizes Stormworks multiplayer by despawning objects every tick,
 
 This addon uses [Aurora Framework](https://github.com/Cuh4/AuroraFramework), a framework I created that tremendously helps with addon development.
 
+This addon was created for this [cool dude.](https://steamcommunity.com/profiles/76561199259162532)
+
 Feel free to `git clone`, or even contribute.
 
 ## ❓ | Requirements
