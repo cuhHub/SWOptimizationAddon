@@ -7,7 +7,7 @@
 
     CREDIT:
         Author: @cuh6_ (Discord)
-        GitHub Repository: https://github.com/cuhHub/LinkAddon
+        GitHub Repository: https://github.com/cuhHub/SWOptimizationAddon
 
     ----------------------------
 ]]
