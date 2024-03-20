@@ -67,7 +67,11 @@ local temporaryObjectObjectType = 2
 
 AuroraFramework.callbacks.onTick.main:connect(function()
     -- spawn a new object
-    local temporaryObject = server.spawnObject(temporaryObjectSpawnPos, temporaryObjectObjectType)
+    local temporaryObject, successful = server.spawnObject(temporaryObjectSpawnPos, temporaryObjectObjectType)
+
+    if not successful then
+        return
+    end
 
     if not old then
         old = temporaryObject
