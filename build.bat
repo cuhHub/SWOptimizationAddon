@@ -1,0 +1,2 @@
+py combine.py --directory "src" --destination "src/script.lua" --allow_file_extension ".lua" --ignore_path "src/p1_framework/intellisense.lua" "src/intellisense"
+py sync.py --syncFolder "src" --destination "%appdata%/Stormworks/data/missions/SWOptimizationAddon"
