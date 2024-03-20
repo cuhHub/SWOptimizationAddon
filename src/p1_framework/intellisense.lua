@@ -346,6 +346,8 @@ _ = {
 }
 
 ---------------- UI
+---@alias af_services_ui_ui af_services_ui_map_label|af_services_ui_map_object|af_services_ui_map_line|af_services_ui_screen
+
 ---@class af_services_ui_screen: af_libs_class_class
 _ = {
     __name__ = "UIScreen",
@@ -503,17 +505,34 @@ _ = {
 
     properties = {
         port = 0, -- The destination port of this request
-        url = "" -- The destination URL of this request. Always localhost
+        URL = "", -- The destination URL of this request. Always localhost (SW limitation)
+        awaitingReplies = {} ---@type table<integer, af_services_http_awaitingreply> -- The awaiting replies for this request
     },
+
+    -- Returns the amount of awaiting replies this request has
+    ---@param self af_services_http_request
+    ---@return integer
+    awaitingRepliesCount = function(self) end,
+
+    -- Returns whether or not this request has 0 awaiting replies left
+    ---@param self af_services_http_request
+    hasFinished = function(self) end,
+
+    -- Remove this request, removing all replies too
+    ---@param self af_services_http_request
+    remove = function(self) end
+}
+
+---@class af_services_http_awaitingreply: af_libs_class_class
+_ = {
+    __name__ = "HTTPAwaitingReply",
+
+    properties = {},
 
     events = {
         ---@type af_libs_event_event
-        reply = nil -- This event is called when this request receives a reply. Two params: Request Response, Request Success
-    },
-
-    -- Cancel this HTTP request
-    ---@param self af_services_http_request
-    cancel = function(self) end
+        reply = nil -- This event is called when the HTTP request parented to this reply receives a response
+    }
 }
 
 ---@class af_services_http_urlarg
@@ -771,7 +790,7 @@ _ = {
     -- Get an item this player has equipped
     ---@param self af_services_player_player
     ---@param slot SWSlotNumberEnum
-    ---@return integer
+    ---@return SWEquipmentTypeEnum
     getItem = function(self, slot) end,
 
     -- Kick this player
@@ -849,8 +868,6 @@ _ = {
     __name__ = "event",
 
     properties = {
-        name = "", -- The name of this event
-
         ---@type table<integer, function>
         connections = {} -- All functions connected to this event
     },
@@ -863,10 +880,6 @@ _ = {
     -- Remove all connections to this event
     ---@param self af_libs_event_event
     clear = function(self) end,
-
-    -- Remove this event from the saved events
-    ---@param self af_libs_event_event
-    remove = function(self) end,
 
     -- Connect a function to this event
     ---@param self af_libs_event_event
